@@ -1,8 +1,8 @@
 #include <iostream>
+#include "node.h"
 
 using namespace std;
 
 int main() {
-	cout << "Hello World!";
-	return 0;
+	Node* source = new Node(0);
 }

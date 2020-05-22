@@ -7,4 +7,8 @@ struct pipe {
 	Node* sink = nullptr;
 	int capacity = 0;
 	int used = 0;
+
+	int free() {
+		return capacity - used;
+	}
 };

@@ -4,9 +4,16 @@
 
 class Node {
 public:
+	Node(int step);
+
+	void addOutPipe(Node* sink, int capacity);
+
+	//for Ford-Fulkerson algorithm, return node viable for traversal
+	Node* goThrough() const;
 
 private:
-	std::vector<pipe*> pipesIn;
-	std::vector<pipe*> pipesOut;
+	const int _step;
+	std::vector<pipe*> _pipesIn;
+	std::vector<pipe*> _pipesOut;
 };
 
