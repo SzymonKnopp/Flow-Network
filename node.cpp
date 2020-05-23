@@ -14,14 +14,18 @@ void Node::addOutPipe(Node* sink, int capacity) {
 	sink->_pipesIn.push_back(newPipe);
 }
 
-Node* Node::goThrough() const {
+Node* Node::goThrough(std::vector<pipe*>& path) const {
 	for (auto& pipe : _pipesOut) {
 		if (pipe->free() != 0 && this->_step <= pipe->sink->_step) {
+			pipe->flowDir = flowDir_t::toSink;
+			path.push_back(pipe);
 			return pipe->sink;
 		}
 	}
 	for (auto& pipe : _pipesIn) {
 		if (pipe->used != 0 && this->_step <= pipe->source->_step) {
+			pipe->flowDir = flowDir_t::toSource;
+			path.push_back(pipe);
 			return pipe->source;
 		}
 	}

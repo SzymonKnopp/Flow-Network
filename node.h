@@ -9,7 +9,7 @@ public:
 	void addOutPipe(Node* sink, int capacity);
 
 	//for Ford-Fulkerson algorithm, return node viable for traversal
-	Node* goThrough() const;
+	Node* goThrough(std::vector<pipe*>& path) const;
 
 private:
 	const int _step;
