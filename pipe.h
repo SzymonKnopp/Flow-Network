@@ -2,7 +2,7 @@
 
 class Node;
 
-enum class flowDir_t { toSource = -1, toSink = 1 };
+enum class pathDir_t { toSource = -1, toSink = 1 };
 
 struct pipe {
 
@@ -10,7 +10,7 @@ struct pipe {
 	Node* sink = nullptr;
 	int capacity = 0;
 	int used = 0;
-	flowDir_t flowDir;
+	pathDir_t pathDir;
 
 	int free() {
 		return capacity - used;
