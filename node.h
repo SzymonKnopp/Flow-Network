@@ -10,13 +10,11 @@ public:
 
 	void addOutPipe(Node* sink, int capacity);
 	virtual bool isSink() const;
-	//for Ford-Fulkerson algorithm, return node viable for traversal
-	Node* goThrough(std::stack<pipe*>& path) const;
 
+	std::vector<pipe*> pipesIn;
+	std::vector<pipe*> pipesOut;
 
-private:
-	const int _step;
-	std::vector<pipe*> _pipesIn;
-	std::vector<pipe*> _pipesOut;
+	//necessary?
+	const int step;
 };
 
