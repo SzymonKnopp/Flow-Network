@@ -7,7 +7,7 @@ void augmentPipe(pipe* pipe, int value);
 int bottleneckValue(vector<pipe*> path);
 void augmentPath(vector<pipe*> path);
 bool foundPath(vector<pipe*>& path, Node* node);
-vector<pipe*> pathToAugment(Node* source);
+vector<pipe*> pathToAugment(Node* source) throw (int);
 
 // fills flow network with maximum flowS
 void fordFulkerson(Node* source) {
