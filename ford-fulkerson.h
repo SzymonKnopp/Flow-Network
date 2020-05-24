@@ -6,7 +6,7 @@ using namespace std;
 
 void augmentPipe(pipe* pipe, int value);
 int bottleneckValue(vector<pipe*> path);
-vector<pipe*> stackToVector(stack<pipe*> pathStack);
+vector<pipe*> stackToVector(stack<pipe*> stack);
 void augmentPath(vector<pipe*> path);
 stack<pipe*> pathToAugment(Node* source);
 
@@ -45,11 +45,14 @@ void augmentPath(vector<pipe*> path) {
 	}
 }
 
-vector<pipe*> stackToVector(stack<pipe*> pathStack) {
-	int size = pathStack.size();
+vector<pipe*> stackToVector(stack<pipe*> stack) {
+	vector<pipe*> vector;
+	int size = stack.size();
 	for (int i = 0; i < size; i++) {
-		
+		vector.push_back(stack.top());
+		stack.pop();
 	}
+	return vector;
 }
 
 int bottleneckValue(vector<pipe*> path) {
