@@ -9,7 +9,7 @@ void augmentPath(vector<pipe*> path);
 bool foundPath(vector<pipe*>& path, Node* node);
 vector<pipe*> pathToAugment(Node* source) throw (int);
 
-// fills flow network with maximum flowS
+// fills flow network with maximum flow
 void fordFulkerson(Node* source) {
 	while (true) {
 		try {
