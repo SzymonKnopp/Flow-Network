@@ -1,7 +1,8 @@
 #include "node.h"
 
-Node::Node(int step) :
-	step(step) {
+Node::Node(std::string name, int step) :
+	step(step),
+	name(name) {
 }
 
 Node::~Node() {

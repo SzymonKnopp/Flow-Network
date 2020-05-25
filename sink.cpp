@@ -1,7 +1,7 @@
 #include "sink.h"
 
-Sink::Sink(int step) :
-	Node(step) {
+Sink::Sink(std::string name, int step) :
+	Node(name, step) {
 }
 
 bool Sink::isSink() const {

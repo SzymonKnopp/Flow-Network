@@ -2,10 +2,14 @@
 #include "sink.h"
 
 int main() {
-	Node* source = new Node(0);
-	Node* top = new Node(1);
-	Node* bottom = new Node(1);
-	Node* sink = new Sink(2);
+
+
+
+	//DEBUG
+	Node* source = new Node("source", 0);
+	Node* top = new Node("top", 1);
+	Node* bottom = new Node("bottom", 1);
+	Node* sink = new Sink("sink", 2);
 
 	source->addOutPipe(top, 3);
 	source->addOutPipe(bottom, 1);
