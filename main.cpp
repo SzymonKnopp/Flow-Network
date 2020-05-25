@@ -1,7 +1,24 @@
 #include "ford-fulkerson.h"
 #include "sink.h"
+#include "department.h"
+#include <iostream>
+
+using namespace std;
 
 int main() {
+	int schedulingMode;
+	int newDayLimit = NULL;
+	cin >> schedulingMode;
+	if (schedulingMode == 3) {
+		cin >> newDayLimit;
+	}
+
+	int outputMode;
+	cin >> outputMode;
+
+	int departmentCount;
+	cin >> departmentCount;
+	Department* departments = new Department[departmentCount];
 
 
 
