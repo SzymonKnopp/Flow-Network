@@ -4,6 +4,7 @@
 #include "group.h"
 #include "researcher.h"
 #include "sink.h"
+#include "taskNode.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ private:
 	int times;
 	Node* source;
 	vector<Node*> researchers;
-	vector<Node*> tasks;
+	vector<TaskNode*> tasks;
 	Node* sink;
 
 	void makeGroupTask(Group& group);
@@ -28,6 +29,12 @@ private:
 	void makeResearcherDayTime(researcher& researcher);
 	void makeDayTime(researcher& researcher, Node* researcherNode);
 	void makeTime(Node* dayNode);
+	void connectTaskToTimes(TaskNode* taskNode);
+	void deleteSource();
+	void deleteResearcher(Node* researcherNode);
+	void deleteDay(Node* dayNode);
+	void deleteSink();
+	
 
 	static int max(int a, int b);
 };

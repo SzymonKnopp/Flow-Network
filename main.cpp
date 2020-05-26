@@ -30,6 +30,7 @@ int main() {
 	FlowNetwork flowNetwork(departments, departmentCount, groups, groupCount);
 
 
+
 	return 0;
 
 	//DEBUG

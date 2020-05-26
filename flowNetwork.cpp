@@ -13,9 +13,14 @@ FlowNetwork::FlowNetwork(Department* departments, int departmentCount, Group* gr
 	for (int i = 0; i < departmentCount; i++) {
 		makeResearchers(departments[i]);
 	}
+
+	for (int i = 0; i < tasks.size(); i++) {
+		connectTaskToTimes(tasks[i]);
+	}
 }
 FlowNetwork::~FlowNetwork() {
-	//TODO
+	deleteSource();
+	deleteSink();
 }
 
 void FlowNetwork::makeGroupTask(Group& group) {
@@ -61,6 +66,40 @@ void FlowNetwork::makeDayTime(researcher& researcher, Node* researcherNode) {
 void FlowNetwork::makeTime(Node* dayNode) {
 	Node* timeNode = new Node("time", 3);
 	dayNode->addOutPipe(timeNode, 1);
+}
+
+void FlowNetwork::connectTaskToTimes(TaskNode* taskNode) {
+	for (int i = 0; i < researchers.size(); i++) {
+		Node* current = researchers[i];
+		current = current->pipesOut[taskNode->day - 1]->sink;
+		current = current->pipesOut[taskNode->time - 1]->sink;
+		current->addOutPipe(taskNode, 1);
+	}
+}
+
+void FlowNetwork::deleteSource() {
+	for (int i = 0; i < source->pipesOut.size(); i++) {
+		deleteResearcher(source->pipesOut[i]->sink);
+	}
+	delete source;
+}
+void FlowNetwork::deleteResearcher(Node* researcherNode) {
+	for (int i = 0; i < researcherNode->pipesOut.size(); i++) {
+		deleteDay(researcherNode->pipesOut[i]->sink);
+	}
+	delete researcherNode;
+}
+void FlowNetwork::deleteDay(Node* dayNode) {
+	for (int i = 0; i < dayNode->pipesOut.size(); i++) {
+		delete dayNode->pipesOut[i]->sink;
+	}
+	delete dayNode;
+}
+void FlowNetwork::deleteSink() {
+	for (int i = 0; i < sink->pipesIn.size(); i++) {
+		delete sink->pipesIn[i]->source;
+	}
+	delete sink;
 }
 
 int FlowNetwork::max(int a, int b) {
