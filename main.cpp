@@ -4,8 +4,13 @@
 #include "group.h"
 #include "flowNetwork.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
+
+void nextIteration(int*& iteration, int iterSize, Department* departments);
+bool solvesFlowNetwork(FlowNetwork& flowNetwork, int*& iterations, Department* departments, int departmentCount);
+void solve(FlowNetwork& flowNetwork, Department* departments, int departmentCount);
 
 int main() {
 	int schedulingMode;
@@ -28,7 +33,7 @@ int main() {
 
 	FlowNetwork flowNetwork(departments, departmentCount, groups, groupCount);
 
-
+	
 
 	return 0;
 
@@ -50,4 +55,34 @@ int main() {
 	delete top;
 	delete bottom;
 	delete sink;
+}
+
+void solve(FlowNetwork& flowNetwork, Department* departments, int departmentCount) {
+	vector<int*> solutions;
+
+	int iterations = 1;
+	for (int i = 0; i < departmentCount; i++) {
+		iterations *= departments[i].researcherCount;
+	}
+	int* iteration = new int[departmentCount] {};
+	for (int i = 0; i < iterations; i++) {
+		if (solvesFlowNetwork(flowNetwork, iteration, departments, departmentCount)) {
+			solutions.push_back(iteration);
+		}
+		nextIteration(iteration, departmentCount, departments);
+	}
+}
+
+bool solvesFlowNetwork(FlowNetwork& flowNetwork, int*& iterations, Department* departments, int departmentCount) {
+	
+}
+
+void nextIteration(int*& iteration, int iterSize, Department* departments) {
+	(iteration[0])++;
+	for (int i = 0; i < iterSize - 1; i++) {
+		if (iteration[i] == departments[i].researcherCount) {
+			(iteration[i + 1])++;
+			iteration[i] = 0;
+		}
+	}
 }
