@@ -2,10 +2,10 @@
 #include <string>
 #include "task.h"
 
-class TaskGroup {
+class Group {
 public:
-	TaskGroup();
-	~TaskGroup();
+	Group();
+	~Group();
 
 	std::string name;
 	int groupHours;

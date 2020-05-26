@@ -1,22 +1,23 @@
-#include "taskGroup.h"
+#include "group.h"
 #include <iostream>
 
 using namespace std;
 
-TaskGroup::TaskGroup() {
+Group::Group() {
 	cin >> name;
 	cin >> taskCount;
 	cin >> groupHours;
 	tasks = new task[taskCount];
 	for (int i = 0; i < taskCount; i++) {
 		tasks[i] = newTask();
+		groupHours -= tasks[i].minHours;
 	}
 }
-TaskGroup::~TaskGroup() {
+Group::~Group() {
 	delete[] tasks;
 }
 
-task TaskGroup::newTask() {
+task Group::newTask() {
 	task newTask;
 	cin >> newTask.day;
 	cin >> newTask.time;

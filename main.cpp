@@ -1,11 +1,14 @@
 #include "ford-fulkerson.h"
 #include "sink.h"
 #include "department.h"
+#include "group.h"
+#include "flowNetwork.h"
 #include <iostream>
 
 using namespace std;
 
 int main() {
+	
 	int schedulingMode;
 	int newDayLimit = NULL;
 	cin >> schedulingMode;
@@ -20,7 +23,14 @@ int main() {
 	cin >> departmentCount;
 	Department* departments = new Department[departmentCount];
 
+	int groupCount;
+	cin >> groupCount;
+	Group* groups = new Group[groupCount];
 
+	FlowNetwork flowNetwork(departments, departmentCount, groups, groupCount);
+
+
+	return 0;
 
 	//DEBUG
 	Node* source = new Node("source", 0);
@@ -40,6 +50,4 @@ int main() {
 	delete top;
 	delete bottom;
 	delete sink;
-
-	return 0;
 }
