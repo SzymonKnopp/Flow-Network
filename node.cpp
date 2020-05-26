@@ -2,7 +2,8 @@
 
 Node::Node(std::string name, int step) :
 	step(step),
-	name(name) {
+	name(name),
+	active(true) {
 }
 
 Node::~Node() {

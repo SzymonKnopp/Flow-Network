@@ -50,6 +50,7 @@ void FlowNetwork::makeResearchers(Department& department) {
 
 void FlowNetwork::makeResearcherDayTime(researcher& researcher) {
 	Node* researcherNode = new Node(researcher.name, 1);
+	researcherNode->active = false;
 	researchers.push_back(researcherNode);
 	source->addOutPipe(researcherNode, researcher.limit);
 	for (int i = 0; i < days; i++) {

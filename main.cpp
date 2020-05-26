@@ -8,7 +8,6 @@
 using namespace std;
 
 int main() {
-	
 	int schedulingMode;
 	int newDayLimit = NULL;
 	cin >> schedulingMode;

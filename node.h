@@ -12,6 +12,7 @@ public:
 	virtual bool isSink() const;
 
 	std::string name;
+	bool active;
 	std::vector<pipe*> pipesIn;
 	std::vector<pipe*> pipesOut;
 
