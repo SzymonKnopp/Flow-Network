@@ -5,6 +5,7 @@
 #include "researcher.h"
 #include "sink.h"
 #include "taskNode.h"
+#include <string>
 
 using namespace std;
 
@@ -13,7 +14,8 @@ public:
 	FlowNetwork(Department* departments, int departmentCount, Group* groups, int groupCount);
 	~FlowNetwork();
 
-
+	void activateResearcher(string name) throw (int);
+	void deactivateResearchers();
 
 private:
 	int days;

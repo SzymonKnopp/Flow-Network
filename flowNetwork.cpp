@@ -23,6 +23,22 @@ FlowNetwork::~FlowNetwork() {
 	deleteSink();
 }
 
+void FlowNetwork::activateResearcher(string name) throw (int) {
+	for (auto& researcher : researchers) {
+		if (researcher->name == name) {
+			researcher->active = true;
+			return;
+		}
+	}
+	throw -1;
+}
+
+void FlowNetwork::deactivateResearchers() {
+	for (auto& researcher : researchers) {
+		researcher->active = false;
+	}
+}
+
 void FlowNetwork::makeGroupTask(Group& group) {
 	Node* groupNode = new Node(group.name, 5);
 	groupNode->addOutPipe(sink, group.groupHours);
