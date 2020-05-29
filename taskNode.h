@@ -4,7 +4,7 @@
 
 class TaskNode : public Node {
 public:
-	TaskNode(std::string name, int step);
+	TaskNode(std::string name);
 
 	int day;
 	int time;

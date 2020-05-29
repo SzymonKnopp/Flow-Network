@@ -4,12 +4,12 @@
 FlowNetwork::FlowNetwork(Department* departments, int departmentCount, Group* groups, int groupCount) {
 	days = 0;
 	times = 0;
-	sink = new Sink("sink", 6);
+	sink = new Sink("sink");
 	for (int i = 0; i < groupCount; i++) {
 		makeGroupTask(groups[i]);
 	}
 
-	source = new Node("source", 0);
+	source = new Node("source");
 	for (int i = 0; i < departmentCount; i++) {
 		makeResearchers(departments[i]);
 	}
@@ -63,7 +63,7 @@ Node* FlowNetwork::getSource() const {
 }
 
 void FlowNetwork::makeGroupTask(Group& group) {
-	Node* groupNode = new Node(group.name, 5);
+	Node* groupNode = new Node(group.name);
 	groupNode->addOutPipe(sink, group.groupHours);
 	for (int i = 0; i < group.taskCount; i++) {
 		makeTask(group.tasks[i], groupNode);
@@ -71,9 +71,9 @@ void FlowNetwork::makeGroupTask(Group& group) {
 }
 
 void FlowNetwork::makeTask(task& task, Node* groupNode) {
-	days = max(days, task.day);
-	times = max(times, task.time);
-	TaskNode* taskNode = new TaskNode("task", 4);
+	days = max(days, task.day + 1);
+	times = max(times, task.time + 1);
+	TaskNode* taskNode = new TaskNode("task");
 	taskNode->day = task.day;
 	taskNode->time = task.time;
 	taskNode->addOutPipe(sink, task.minHours);
@@ -88,7 +88,7 @@ void FlowNetwork::makeResearchers(Department& department) {
 }
 
 void FlowNetwork::makeResearcherDayTime(researcher& researcher) {
-	Node* researcherNode = new Node(researcher.name, 1);
+	Node* researcherNode = new Node(researcher.name);
 	researcherNode->active = false;
 	researchers.push_back(researcherNode);
 	source->addOutPipe(researcherNode, researcher.limit);
@@ -97,22 +97,22 @@ void FlowNetwork::makeResearcherDayTime(researcher& researcher) {
 	}
 }
 void FlowNetwork::makeDayTime(researcher& researcher, Node* researcherNode) {
-	Node* dayNode = new Node("day", 2);
+	Node* dayNode = new Node("day");
 	researcherNode->addOutPipe(dayNode, researcher.dayLimit);
 	for (int i = 0; i < times; i++) {
 		makeTime(dayNode);
 	}
 }
 void FlowNetwork::makeTime(Node* dayNode) {
-	Node* timeNode = new Node("time", 3);
+	Node* timeNode = new Node("time");
 	dayNode->addOutPipe(timeNode, 1);
 }
 
 void FlowNetwork::connectTaskToTimes(TaskNode* taskNode) {
 	for (int i = 0; i < researchers.size(); i++) {
 		Node* current = researchers[i];
-		current = current->pipesOut[taskNode->day - 1]->sink;
-		current = current->pipesOut[taskNode->time - 1]->sink;
+		current = current->pipesOut[taskNode->day]->sink;
+		current = current->pipesOut[taskNode->time]->sink;
 		current->addOutPipe(taskNode, 1);
 	}
 }

@@ -50,26 +50,30 @@ bool foundPath(vector<pipe*>& path, Node* node) {
 	if (node->isSink()) {
 		return true;
 	}
+	node->usedInPath = true;
 	for (auto& pipe : node->pipesOut) {
 		if (pipe->free() != 0
-			&& node->step <= pipe->sink->step
+			&& pipe->sink->usedInPath == false
 			&& pipe->sink->active == true
 			&& foundPath(path, pipe->sink)) {
 				pipe->pathDir = pathDir_t::toSink;
 				path.push_back(pipe);
+				node->usedInPath = false;
 				return true;
 		}
 	}
 	for (auto& pipe : node->pipesIn) {
 		if (pipe->used != 0
-			&& node->step <= pipe->source->step
+			&& pipe->source->usedInPath == false
 			&& pipe->source->active == true
 			&& foundPath(path, pipe->source)) {
 				pipe->pathDir = pathDir_t::toSource;
 				path.push_back(pipe);
+				node->usedInPath = false;
 				return true;
 		}
 	}
+	node->usedInPath = false;
 	return false;
 }
 

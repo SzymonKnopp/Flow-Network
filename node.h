@@ -5,7 +5,7 @@
 
 class Node {
 public:
-	Node(std::string name, int step);
+	Node(std::string name);
 	~Node();
 
 	void addOutPipe(Node* sink, int capacity);
@@ -13,10 +13,8 @@ public:
 
 	std::string name;
 	bool active;
+	bool usedInPath;
 	std::vector<pipe*> pipesIn;
 	std::vector<pipe*> pipesOut;
-
-	//necessary?
-	const int step;
 };
 

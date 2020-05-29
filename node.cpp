@@ -1,9 +1,9 @@
 #include "node.h"
 
-Node::Node(std::string name, int step) :
-	step(step),
+Node::Node(std::string name) :
 	name(name),
-	active(true) {
+	active(true),
+	usedInPath(false) {
 }
 
 Node::~Node() {

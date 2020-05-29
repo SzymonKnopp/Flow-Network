@@ -3,7 +3,7 @@
 
 class Sink : public Node {
 public:
-	Sink(std::string name, int step);
+	Sink(std::string name);
 
 	bool isSink() const override;
 };
