@@ -30,7 +30,7 @@ void FlowNetwork::activateResearcher(string name) throw (int) {
 			return;
 		}
 	}
-	throw -1;
+	//throw -1; //STOS terminating execution on error
 }
 
 void FlowNetwork::deactivateResearchers() {

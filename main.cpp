@@ -40,7 +40,9 @@ int main() {
 
 	cout << activeResearchersValue(researchersFromDepartments, departments, departmentCount) << endl;
 	for (int i = 0; i < departmentCount; i++) {
-		cout << departments[i].name << " " << researchersFromDepartments[i] << endl;
+		if(researchersFromDepartments[i] != 0){
+			cout << departments[i].name << " " << researchersFromDepartments[i] << endl;
+		}
 	}
 
 	delete[] researchersFromDepartments;
@@ -93,13 +95,14 @@ int* solution(FlowNetwork& flowNetwork, Department* departments, int departmentC
 bool solvesFlowNetwork(FlowNetwork& flowNetwork, int*& iterations, Department* departments, int departmentCount) {
 	for (int dep = 0; dep < departmentCount; dep++) {
 		for (int res = 0; res < iterations[dep]; res++) {
-			try {
+			/*try {
 				flowNetwork.activateResearcher(departments[dep].researchers[res].name);
 			}
 			catch (...) {
 				cout << "Error: researcher named " << departments[dep].researchers[res].name << " not found in flow network." << endl;
 				return false;
-			}
+			}*/ //STOS terminating execution on error
+			flowNetwork.activateResearcher(departments[dep].researchers[res].name);
 		}
 	}
 

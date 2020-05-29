@@ -12,11 +12,18 @@ vector<pipe*> pathToAugment(Node* source) throw (int);
 // fills flow network with maximum flow
 void fordFulkerson(Node* source) {
 	while (true) {
-		try {
+		/*try {
 			vector<pipe*> path = pathToAugment(source);
 			augmentPath(path);
 		}
 		catch (...) {
+			return;
+		}*/ //STOS terminating execution on error
+		vector<pipe*> path = pathToAugment(source);
+		if (path.size() != 0) {
+			augmentPath(path);
+		}
+		else {
 			return;
 		}
 	}
@@ -24,11 +31,18 @@ void fordFulkerson(Node* source) {
 
 vector<pipe*> pathToAugment(Node* source) throw (int) {
 	vector<pipe*> path;
-	if (foundPath(path, source)) {
+	/*if (foundPath(path, source)) {
 		return path;
 	}
 	else {
 		throw -1; //viable path not found
+	}*/ //STOS terminating execution on error
+	if (foundPath(path, source)) {
+		return path;
+	}
+	else {
+		vector<pipe*> emptyPath;
+		return emptyPath;
 	}
 }
 
