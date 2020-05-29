@@ -16,6 +16,9 @@ public:
 
 	void activateResearcher(string name) throw (int);
 	void deactivateResearchers();
+	bool sinkMaxFilled();
+	void clearFlow();
+	Node* getSource() const;
 
 private:
 	int days;
@@ -32,6 +35,7 @@ private:
 	void makeDayTime(researcher& researcher, Node* researcherNode);
 	void makeTime(Node* dayNode);
 	void connectTaskToTimes(TaskNode* taskNode);
+	void clearBranch(Node* current);
 	void deleteSource();
 	void deleteResearcher(Node* researcherNode);
 	void deleteDay(Node* dayNode);

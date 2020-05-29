@@ -39,6 +39,29 @@ void FlowNetwork::deactivateResearchers() {
 	}
 }
 
+bool FlowNetwork::sinkMaxFilled() {
+	for (auto& pipe : sink->pipesIn) {
+		if (pipe->used != pipe->capacity) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void FlowNetwork::clearFlow() {
+	clearBranch(source);
+}
+void FlowNetwork::clearBranch(Node* current) {
+	for (auto& pipe : current->pipesOut) {
+		pipe->used = 0;
+		clearBranch(pipe->sink);
+	}
+}
+
+Node* FlowNetwork::getSource() const {
+	return source;
+}
+
 void FlowNetwork::makeGroupTask(Group& group) {
 	Node* groupNode = new Node(group.name, 5);
 	groupNode->addOutPipe(sink, group.groupHours);
