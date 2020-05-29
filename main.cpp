@@ -93,7 +93,13 @@ int* solution(FlowNetwork& flowNetwork, Department* departments, int departmentC
 bool solvesFlowNetwork(FlowNetwork& flowNetwork, int*& iterations, Department* departments, int departmentCount) {
 	for (int dep = 0; dep < departmentCount; dep++) {
 		for (int res = 0; res < iterations[dep]; res++) {
-			flowNetwork.activateResearcher(departments[dep].researchers[res].name);
+			try {
+				flowNetwork.activateResearcher(departments[dep].researchers[res].name);
+			}
+			catch (...) {
+				cout << "Error: researcher named " << departments[dep].researchers[res].name << " not found in flow network." << endl;
+				return false;
+			}
 		}
 	}
 
@@ -117,7 +123,7 @@ int* copyArray(int* original, int size) {
 void nextIteration(int*& iteration, int iterSize, Department* departments) {
 	(iteration[0])++;
 	for (int i = 0; i < iterSize - 1; i++) {
-		if (iteration[i] == departments[i].researcherCount) {
+		if (iteration[i] == departments[i].researcherCount + 1) {
 			(iteration[i + 1])++;
 			iteration[i] = 0;
 		}
