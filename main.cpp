@@ -8,6 +8,10 @@
 
 using namespace std;
 
+void writeResearcherTask(Node* taskNode, int& taskCount, string& schedule);
+void writeResearcherTime(Node* timeNode, int& taskCount, string& schedule);
+void writeResearcherDay(Node* dayNode, int& taskCount, string& schedule);
+void writeResearcherSchedule(string name, FlowNetwork& flowNetwork);
 int activeResearchersValue(int* solution, Department* departments, int departmentCount);
 int* lowestValueSolution(vector<int*> solutions, Department* departments, int departmentCount);
 void nextIteration(int*& iteration, int iterSize, Department* departments);
@@ -38,10 +42,30 @@ int main() {
 
 	int* researchersFromDepartments = solution(flowNetwork, departments, departmentCount);
 
+	if (outputMode == 2) { //fill flow network once again, simulate solution, so that informations about researcher schedules can be extracted
+		for (int dep = 0; dep < departmentCount; dep++) {
+			for (int res = 0; res < researchersFromDepartments[dep]; res++) {
+				/*try {
+					flowNetwork.activateResearcher(departments[dep].researchers[res].name);
+				}
+				catch (...) {
+					cout << "Error: researcher named " << departments[dep].researchers[res].name << " not found in flow network." << endl;
+					return false;
+				}*/ //STOS terminating execution on error
+				flowNetwork.activateResearcher(departments[dep].researchers[res].name);
+			}
+		}
+		fordFulkerson(flowNetwork.getSource());
+	}
 	cout << activeResearchersValue(researchersFromDepartments, departments, departmentCount) << endl;
-	for (int i = 0; i < departmentCount; i++) {
-		if(researchersFromDepartments[i] != 0){
-			cout << departments[i].name << " " << researchersFromDepartments[i] << endl;
+	for (int dep = 0; dep < departmentCount; dep++) {
+		if(researchersFromDepartments[dep] != 0){
+			cout << departments[dep].name << " " << researchersFromDepartments[dep] << endl;
+		}
+		if (outputMode == 2) {
+			for (int res = 0; res < researchersFromDepartments[dep]; res++) {
+				writeResearcherSchedule(departments[dep].researchers[res].name, flowNetwork);
+			}
 		}
 	}
 
@@ -135,4 +159,53 @@ int activeResearchersValue(int* solution, Department* departments, int departmen
 		}
 	}
 	return value;
+}
+
+void writeResearcherSchedule(string name, FlowNetwork& flowNetwork) {
+	Node* researcherNode;
+	try {
+		researcherNode = flowNetwork.getResearcher(name);
+	}
+	catch (int) {
+		cerr << "Error: Researcher not found";
+		return;
+	}
+	int taskCount = 0;
+	string schedule = "";
+	for (auto& pipe : researcherNode->pipesOut) {
+		if (pipe->used != 0) {
+			writeResearcherDay(pipe->sink, taskCount, schedule);
+		}
+	}
+	cout << name << " " << taskCount << endl << schedule;
+}
+void writeResearcherDay(Node* dayNode, int& taskCount, string& schedule) {
+	for (auto& pipe : dayNode->pipesOut) {
+		if (pipe->used != 0) {
+			writeResearcherTime(pipe->sink, taskCount, schedule);
+		}
+	}
+}
+void writeResearcherTime(Node* timeNode, int& taskCount, string& schedule) {
+	for (auto& pipe : timeNode->pipesOut) {
+		if (pipe->used != 0) {
+			writeResearcherTask(pipe->sink, taskCount, schedule);
+		}
+	}
+}
+void writeResearcherTask(Node* taskNode, int& taskCount, string& schedule) {
+	TaskNode* taskCast = dynamic_cast<TaskNode*>(taskNode);
+	string groupName;
+	for (auto& pipe : taskNode->pipesOut) {
+		if (pipe->sink->name != "sink") {
+			groupName = pipe->sink->name;
+			break;
+		}
+	}
+	taskCount++;
+	schedule += groupName + ' ';
+	schedule += (char)(taskCast->day + '0');
+	schedule += ' ';
+	schedule += (char)(taskCast->time + '0');
+	schedule += '\n';
 }

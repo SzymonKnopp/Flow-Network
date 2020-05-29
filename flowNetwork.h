@@ -15,6 +15,7 @@ public:
 	~FlowNetwork();
 
 	void activateResearcher(string name) throw (int);
+	Node* getResearcher(string name) throw (int);
 	void deactivateResearchers();
 	bool sinkMaxFilled();
 	void clearFlow();

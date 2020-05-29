@@ -24,13 +24,22 @@ FlowNetwork::~FlowNetwork() {
 }
 
 void FlowNetwork::activateResearcher(string name) throw (int) {
+	try {
+		Node* researcherNode = getResearcher(name);
+		researcherNode->active = true;
+	}
+	catch (int) {
+		throw -1;
+	}
+}
+
+Node* FlowNetwork::getResearcher(string name) throw(int) {
 	for (auto& researcher : researchers) {
 		if (researcher->name == name) {
-			researcher->active = true;
-			return;
+			return researcher;
 		}
 	}
-	//throw -1; //STOS terminating execution on error
+	throw -1;
 }
 
 void FlowNetwork::deactivateResearchers() {
