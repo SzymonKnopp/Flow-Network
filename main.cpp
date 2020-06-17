@@ -1,3 +1,17 @@
+// Time complexity of solution():
+/*
+liczba operacji(najgorszy przypadek) = n^k(n^2 + 5n + 7z + 5g + 4ndc + 4nd + 2cz + 2k + 3) + 2k + 2nk
+
+O(n^k(n^2 + n) + n)
+
+k - liczba katedr
+n - liczba naukowców
+d - liczba dni
+c - liczba czasów
+z - liczba zadañ
+g - liczba grup
+*/
+
 #include "ford-fulkerson.h"
 #include "sink.h"
 #include "department.h"
